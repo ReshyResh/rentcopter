@@ -20,7 +20,7 @@ class ApplicationController < ActionController::API
     }, status: :bad_request
   end
 
-  before_action :update_allowed_parameters, if: :devise_controller?
+  # before_action :update_allowed_parameters, if: :devise_controller?
 
   protected
 

@@ -1,6 +1,7 @@
 class Api::V1::HelicoptersController < ApplicationController
-  before_action :set_helicopter, only: %i[show update destroy]
-  before_action :authenticate_user!
+  # before_action :set_helicopter, only: %i[show update destroy]
+  # before_action :authenticate_user!
+  # before_action :authenticate_request!
 
   # GET /helicopters
   def index
@@ -11,15 +12,16 @@ class Api::V1::HelicoptersController < ApplicationController
 
   # GET /helicopters/1
   def show
-    @helicopter = Helicopter.find(params[:id])
-    render json: @helicopter
+    # @helicopter = Helicopter.find(params[:id])
+    # render json: @helicopter
+    render ''
   end
 
   # POST /helicopters
   def create
     @user = User.find(current_user.id)
     @helicopter = @user.helicopters.new(helicopter_params)
-    authorize! :create, @helicopter
+    # authorize! :create, @helicopter
 
     if @helicopter.save
       render json: @helicopter, status: :created, location: api_v1_helicopter_url(@helicopter)

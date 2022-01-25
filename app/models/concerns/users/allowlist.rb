@@ -12,7 +12,7 @@ module Users::Allowlist
     # @see Warden::JWTAuth::Interfaces::RevocationStrategy#revoke_jwt
     def self.revoke_jwt(payload, user)
       jwt = user.allowlisted_jwts.find_by(payload.slice('jti', 'aud'))
-      jwt.destroy! if jwt
+      jwt&.destroy!
     end
   end
 
@@ -26,10 +26,10 @@ module Users::Allowlist
     )
     if token.present? && prev_token.present?
       token.update_columns({
-        browser_data: prev_token.browser_data,
-        os_data: prev_token.os_data,
-        remote_ip: prev_token.remote_ip,
-      })
+                             browser_data: prev_token.browser_data,
+                             os_data: prev_token.os_data,
+                             remote_ip: prev_token.remote_ip
+                           })
       # NOTE: don't destroy the previous token right away in case
       # user opens new tab, or whatever and needs to do something...
       # prev_token.destroy!
